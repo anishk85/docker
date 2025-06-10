@@ -1,0 +1,39 @@
+
+services:
+  backend:
+    build:
+      context: ./server
+    command: npm run dev
+    ports:
+      - "5000:5000"
+    
+    environment:
+     
+
+    develop:
+      watch:
+        - path: ./server
+          action: sync
+          target: /app
+        - path: ./server/package.json
+          action: rebuild
+        - path: ./server/package-lock.json
+          action: rebuild
+
+  frontend:
+    build:
+      context: ./frontend
+    command: npm run start
+    ports:
+      - "3000:3000"
+    environment:
+    
+    develop:
+      watch:
+        - path: ./frontend/src
+          action: sync
+          target: /app/src
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
